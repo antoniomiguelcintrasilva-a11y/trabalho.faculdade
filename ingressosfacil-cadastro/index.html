@@ -42,6 +42,7 @@
                                 <label for="categoria" class="form-label">Categoria preferida</label>
                                 <select class="form-select" id="categoria" name="categoria" required>
                                     <option value="">Selecione...</option>
+                                    <option value="">Selecione...</option>
                                     <option value="show">Shows</option>
                                     <option value="comedia">Comédia</option>
                                     <option value="esporte">Esportes</option>
@@ -62,12 +63,40 @@
     </main>
 
     <script>
-        // ===== Elementos da página =====
+        const formCadastro = document.getElementById("form-cadastro");
+        const nome = document.getElementById("nome");
+        const email = document.getElementById("email");
+        const senha = document.getElementById("senha");
+        const categoria = document.getElementById("categoria");
+        const termos = document.getElementById("termos");
+        const alertaCadastro = document.getElementById("alerta-cadastro");
 
-        // ===== Função que mostra o alerta =====
+        function mostrarAlerta(texto, tipo) {
+            alertaCadastro.textContent = texto;                 // escreve a mensagem
+            alertaCadastro.className = "alert alert-" + tipo;   // troca as classes: define a cor
+            alertaCadastro.hidden = false;                      // mostra o alerta
+        }
 
-        // ===== Envio do formulário =====
+        formCadastro.addEventListener("submit", function (event) {
+            event.preventDefault();
 
+            const usuario = {
+                nome: nome.value.trim(),
+                email: email.value.trim().toLowerCase(),
+                senha: senha.value,
+                categoria: categoria.value,
+                aceitouTermos: termos.checked
+            };
+
+            const nomeCategoria = categoria.selectedOptions[0].textContent;
+
+            mostrarAlerta(
+                `Cadastro realizado, ${usuario.nome}! E-mail: ${usuario.email}. Categoria preferida: ${nomeCategoria}.`,
+                "success"
+            );
+
+            formCadastro.reset();
+        });
     </script>
 </body>
 
